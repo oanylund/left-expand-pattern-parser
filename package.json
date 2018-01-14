@@ -1,0 +1,18 @@
+{
+  "name": "descriptor-linking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "'Ole-Andreas <'ole.a.nylund@gmail.com'>",
+  "license": "MIT",
+  "scripts": {
+    "parse": "nodemon peg-otf.js"
+  },
+  "devDependencies": {
+    "jest": "22.0.6",
+    "pegjs": "0.10.0"
+  },
+  "dependencies": {
+    "ramda": "0.25.0",
+    "sanctuary": "0.14.1"
+  }
+}
