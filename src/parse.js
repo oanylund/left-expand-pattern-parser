@@ -1,12 +1,12 @@
-const R = require("ramda");
-const { Left, Right, I } = require("sanctuary");
+const { lensProp, compose, over, map, prop, pickAll } = require("ramda");
+const { Left, Right } = require("sanctuary");
 const { parse } = require("./generatedParser");
 
-const locationLens = R.lensProp("location");
+const locationLens = lensProp("location");
 
-const transformParsingError = R.compose(
-  R.over(locationLens, R.map(R.prop("offset"))),
-  R.pickAll(["message", "location"])
+const transformParsingError = compose(
+  over(locationLens, map(prop("offset"))),
+  pickAll(["message", "location"])
 );
 
 const safeParse = str => {
