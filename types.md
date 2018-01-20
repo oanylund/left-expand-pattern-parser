@@ -1,17 +1,51 @@
-# Description-linker
+# Descriptor-linker
 
-parse(str) -> parser (by peg.js generated from grammar)
--> description object (can be three types)
+## Usage
+parse(str) -> Either SyntaxError Descriptor
 
-### Constants
+## Constants
 ```javascript
 const REFERENCE = "REFERENCE";
 const PARTIAL = "PARTIAL";
 const COMPLETE = "COMPLETE";
 const MISSING_REFERENCES = "MISSING_REFERENCES";
 ```
+## Types
 
-### Partials from list received from parser
+### Descriptor
+#### after going through transfrom it becomes
+```javascript
+const complete = {
+    progress: String,
+    missing_refs: [],
+    list: []
+}
+```
+
+```javascript
+// completed Description object
+const completed = {
+    progress: COMPLETE,
+    missing_refs: [],
+    list: [String]
+}
+```
+
+```javascript
+// needs filled references Description object
+const missing = {
+    progress: MISSING_REFERENCES,
+    missing_refs: [{}:missing_refs_obj, {}:missing_refs_obj, ...],
+    list: [{}, {}, ...]
+}
+```
+
+
+
+
+### Sub types 
+
+Items of list array. The list array is a member of the Descriptor type.
 ```javascript
 // Reference object
 const reference = {
@@ -26,38 +60,11 @@ const partial = {
 }
 ```
 
-### Description object
-#### after going through transfrom it becomes
+missing_refs type. Member of the Descriptor type.
 ```javascript
-const complete = {
-    progress: String,
-    missing_refs: [],
-    list: []
+const missing_refs_obj = {
+    ref: "fafea",
+    idx: 1
 }
-```
-
-```javascript
-    // completed Description object
-    const completed = {
-        progress: COMPLETE,
-        missing_refs: [],
-        list: [String]
-    }
-```
-
-```javascript
-    // needs filled references Description object
-    const missing = {
-        progress: MISSING_REFERENCES,
-        missing_refs: [{}:missing_refs_obj, {}:missing_refs_obj, ...],
-        list: [{}, {}, ...]
-    }
-```
-
-```javascript
-    const missing_refs_obj = {
-        ref: "fafea",
-        idx: 1
-    }
 ```
     
