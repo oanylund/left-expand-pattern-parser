@@ -5,13 +5,16 @@
   "author": "'Ole-Andreas <'ole.a.nylund@gmail.com'>",
   "license": "MIT",
   "scripts": {
-    "parse": "nodemon peg-otf.js"
+    "parse": "nodemon peg-otf.js",
+    "test": "jest --watch",
+    "nearley-test": "nearleyc ./grammar/grammar.ne --out ./grammar/grammar-nearley.js && nearley-test ./test.txt"
   },
   "devDependencies": {
     "jest": "22.0.6",
     "pegjs": "0.10.0"
   },
   "dependencies": {
+    "nearley": "^2.11.0",
     "ramda": "0.25.0",
     "sanctuary": "0.14.1"
   }

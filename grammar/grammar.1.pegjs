@@ -1,24 +1,35 @@
 {
-  const R = require("ramda");
+  const R = require("ramda")
   const { join } = require("path")
   const { 
     buildList,
     letterRange,
     integerRange,
-    takePos
-  } = require(join(process.cwd(), "src", "util"));
+    takePos,
+    makeRefObj,
+    makePartialObj,
+    makeDescObj
+  } = require(join(process.cwd(), "src", "util"))
 }
 
-Descriptors
-  = descs:(_ Descriptor+ _)* { 
-    return R.compose(R.flatten, takePos(1))(descs);
-  }
+// Descriptors
+//   = descs:(_ Descriptor+ _)* { 
+//     return R.compose(R.flatten, takePos(1))(descs)
+//   }
 
 Descriptor
-  = _ parts:Partial+ _ { return buildList(parts) }
+  = _ parts:Partial+ _ { return makeDescObj(parts) }
+
+Part
+  = Partial / ExternalReferance
 
 Partial
-  = Expression / Enum / ArrWrappedStaticText
+  = partial:(Expression / Enum / ArrWrappedStaticText) { 
+      return makePartialObj(partial)
+    }
+
+ExternalReferance
+  = "%" ref:[a-zA-Z0-9]+ "%" { return makeRefObj(ref) }
 
 Expression
   = "(" et:ExType+ ")" { return buildList(et) }
