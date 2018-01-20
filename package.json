@@ -1,7 +1,7 @@
 {
   "name": "descriptor-linking",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/parse",
   "author": "'Ole-Andreas <'ole.a.nylund@gmail.com'>",
   "license": "MIT",
   "scripts": {
