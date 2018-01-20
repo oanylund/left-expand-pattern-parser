@@ -10,15 +10,11 @@
     makePartialObj,
     makeDescObj
   } = require(join(process.cwd(), "src", "util"))
+  const charArrToString = R.join("")
 }
 
-// Descriptors
-//   = descs:(_ Descriptor+ _)* { 
-//     return R.compose(R.flatten, takePos(1))(descs)
-//   }
-
 Descriptor
-  = _ parts:Partial+ _ { return makeDescObj(parts) }
+  = _ parts:Part+ _ { return makeDescObj(parts) }
 
 Part
   = Partial / ExternalReferance
@@ -28,16 +24,16 @@ Partial
       return makePartialObj(partial)
     }
 
-ExternalReferance
-  = "%" ref:[a-zA-Z0-9]+ "%" { return makeRefObj(ref) }
+ExternalReferance "reference"
+  = "%" ref:[a-zA-Z0-9]+ "%" { return R.compose(makeRefObj, charArrToString)(ref) }
 
-Expression
+Expression "expression"
   = "(" et:ExType+ ")" { return buildList(et) }
 
 ExType
   = Range / Enum / FreeText
 
-Enum
+Enum "enum"
   = "{" e:(EnumType ","?)+ "}" { 
     return R.compose(R.flatten, R.map(R.head))(e)
   }
@@ -45,34 +41,34 @@ Enum
 EnumType
   = StaticText / Expression
 
-Range
+Range "range"
   = r:(LetterRange / IntegerRange / ZeroPaddedIntegerRange) { return r }
 
-LetterRange
+LetterRange "letter range"
   = head:Letter "-" tail:Letter { return letterRange(head, tail) }
 
-ZeroPaddedIntegerRange
+ZeroPaddedIntegerRange "zero padding"
   = "^" zeroes:Integer "^" range:IntegerRange {
     return range.map(intStr => intStr.padStart(zeroes, "0") )
   }
 
-IntegerRange
+IntegerRange "integer range"
   = head:Integer "-" tail:Integer { return integerRange(head, tail) }
   
-FreeText
-  = "\"" ft:[a-zA-Z0-9-\/]+ "\"" { return [ft.join("")] }
+FreeText "free text"
+  = "\"" ft:[a-zA-Z0-9-\/]+ "\"" { return [charArrToString(ft)] }
 
 ArrWrappedStaticText
   = st:StaticText { return [st] }
 
-StaticText
-  = st:[a-zA-Z0-9-_]+ { return st.join("") }
+StaticText "static text"
+  = st:[a-zA-Z0-9-_]+ { return charArrToString(st) }
 
-Letter
+Letter "letter"
   = l:[a-zA-Z] { return l.toUpperCase() }
 
-Integer
-  = i:[0-9]+ { return +i.join("") }
+Integer "integer"
+  = i:[0-9]+ { return +charArrToString(i) }
 
 _ "whitespace"
   = [ \t\n\r]*
