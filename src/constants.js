@@ -1,0 +1,6 @@
+// Constants
+exports.REFERENCE = "REFERENCE";
+exports.PARTIAL = "PARTIAL";
+
+exports.COMPLETE = "COMPLETE";
+exports.MISSING_REFERENCES = "MISSING_REFERENCES";

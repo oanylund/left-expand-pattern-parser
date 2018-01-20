@@ -22,18 +22,25 @@ const partial = {
 // Description object
 const complete = {
     progress: String,
+    missing_refs: [],
     list: []
 }
 
     // completed Description object
     const completed = {
         progress: COMPLETE,
-        list: [{}, {}, ...]
+        missing_refs: [],
+        list: [String]
     }
 
     // needs filled references Description object
     const missing = {
         progress: MISSING_REFERENCES,
-        missing_refs: ["ff", "ff"],
-        list: [String]
+        missing_refs: [{}:missing_refs_obj, {}:missing_refs_obj, ...],
+        list: [{}, {}, ...]
+    }
+
+    const missing_refs_obj = {
+        ref: "fafea",
+        idx: 1
     }
