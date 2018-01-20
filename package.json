@@ -5,6 +5,7 @@
   "author": "'Ole-Andreas <'ole.a.nylund@gmail.com'>",
   "license": "MIT",
   "scripts": {
+    "build-parser": "pegjs -o ./src/generatedParser.js ./grammar/grammarWithRefs.pegjs",
     "parse": "nodemon peg-otf.js",
     "test": "jest --watch",
     "nearley-test": "nearleyc ./grammar/grammar.ne --out ./grammar/grammar-nearley.js && nearley-test ./test.txt"
