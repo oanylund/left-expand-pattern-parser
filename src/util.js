@@ -7,6 +7,12 @@ const {
 
 const R = require("ramda");
 
+// Temporary before going es6
+exports.compose = R.compose;
+exports.flatten = R.flatten;
+exports.map = R.map;
+exports.head = R.head;
+
 const charToCharCode = R.invoker(1, "charCodeAt")(0);
 const findMinMax = R.apply(R.juxt([Math.min, Math.max]));
 const isType = R.propEq("type");
@@ -17,6 +23,10 @@ const getList = R.view(listLens);
 const partLens = R.lensProp("part");
 const getPart = R.view(partLens);
 const zipWithIndex = R.addIndex(R.map)(R.pair);
+
+const charArrToString = R.join("");
+
+exports.charArrToString = charArrToString;
 
 const appender = (acc, val) =>
   R.compose(R.flatten, R.map(av => val.map(vv => av + vv)))(acc);

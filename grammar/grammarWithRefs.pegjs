@@ -1,6 +1,4 @@
 {
-  const R = require("ramda")
-  const { join } = require("path")
   const { 
     buildList,
     letterRange,
@@ -8,9 +6,13 @@
     takePos,
     makeRefObj,
     makePartialObj,
-    makeDescObj
-  } = require(join(process.cwd(), "src", "util"))
-  const charArrToString = R.join("")
+    makeDescObj,
+    charArrToString,
+    compose,
+    flatten,
+    map,
+    head 
+  } = utils
 }
 
 Descriptor
@@ -25,7 +27,7 @@ Partial
     }
 
 ExternalReferance "reference"
-  = "%" ref:[a-zA-Z0-9]+ "%" { return R.compose(makeRefObj, charArrToString)(ref) }
+  = "%" ref:[a-zA-Z0-9]+ "%" { return compose(makeRefObj, charArrToString)(ref) }
 
 Expression "expression"
   = "(" et:ExType+ ")" { return buildList(et) }
@@ -35,7 +37,7 @@ ExType
 
 Enum "enum"
   = "{" e:(EnumType ","?)+ "}" { 
-    return R.compose(R.flatten, R.map(R.head))(e)
+    return compose(flatten, map(head))(e)
   }
   
 EnumType

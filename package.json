@@ -5,7 +5,7 @@
   "author": "'Ole-Andreas <'ole.a.nylund@gmail.com'>",
   "license": "MIT",
   "scripts": {
-    "build-parser": "pegjs -o ./src/generatedParser.js ./grammar/grammarWithRefs.pegjs",
+    "build-parser": "node ./scripts/generateParser.js",
     "grammar-test": "nodemon peg-otf.js",
     "test": "jest --watch"
   },
