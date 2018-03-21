@@ -1961,9 +1961,9 @@ path-type@^1.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-pegjs@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.10.0.tgz#cf8bafae6eddff4b5a7efb185269eaaf4610ddbd"
+pegjs@0.11.0-dev.225:
+  version "0.11.0-dev.225"
+  resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.11.0-dev.225.tgz#ea3b48da920e4526fde961009cb2a073e499e567"
 
 performance-now@^0.2.0:
   version "0.2.0"
