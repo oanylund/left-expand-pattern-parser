@@ -4,3 +4,4 @@ export const PARTIAL = "PARTIAL";
 
 export const COMPLETE = "COMPLETE";
 export const MISSING_REFERENCES = "MISSING_REFERENCES";
+export const ERROR = "ERROR";

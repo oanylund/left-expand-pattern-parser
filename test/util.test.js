@@ -1,10 +1,10 @@
-const { buildList, findMissingRefs, makeDescObj } = require("./util");
-const {
+import { buildList, findMissingRefs, makeDescObj } from "../src/util";
+import {
   REFERENCE,
   PARTIAL,
   COMPLETE,
   MISSING_REFERENCES
-} = require("./constants");
+} from "../src/constants";
 
 describe("buildList", () => {
   it("should flatten list", () => {

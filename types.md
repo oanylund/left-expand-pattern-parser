@@ -1,70 +1,85 @@
-# Descriptor-linker
+# left-expand-pattern-parser
 
 ## Usage
-parse(str) -> Either SyntaxError Descriptor
+
+```javascript
+import parser from "left-expand-pattern-parser";
+
+parser("{a,b}(1-3)");
+// { progress: "COMPLETE", missing_refs: [], list: [a1, a2, a3, b1, b2, b3] }
+```
 
 ## Constants
+
 ```javascript
 const REFERENCE = "REFERENCE";
 const PARTIAL = "PARTIAL";
 const COMPLETE = "COMPLETE";
 const MISSING_REFERENCES = "MISSING_REFERENCES";
+const ERROR = "ERROR";
 ```
-## Types
+
+## Interfaces
 
 ### Descriptor
-#### after going through transfrom it becomes
+
 ```javascript
-const complete = {
-    progress: String,
-    missing_refs: [],
-    list: []
+{
+    progress: COMPLETE | MISSING_REFERENCES | ERROR,
+    parse_error?: ParseError,
+    missing_refs?: [MissingRef],
+    list?: []
 }
 ```
 
 ```javascript
-// completed Description object
-const completed = {
+// typical COMPLETE Description object
+{
     progress: COMPLETE,
     missing_refs: [],
     list: [String]
 }
-```
 
-```javascript
-// needs filled references Description object
-const missing = {
+// typical MISSING_REFERENCES Description object
+{
     progress: MISSING_REFERENCES,
-    missing_refs: [{}:missing_refs_obj, {}:missing_refs_obj, ...],
-    list: [{}, {}, ...]
+    missing_refs: [MissingRef],
+    list: [ListItem]
+}
+
+// typical Error Description object
+{
+    progress: ERROR,
+    parse_error: ParseError
 }
 ```
 
+### ListItem
 
-
-
-### Sub types 
-
-Items of list array. The list array is a member of the Descriptor type.
 ```javascript
-// Reference object
-const reference = {
-    type: REFERENCE,
-    ref: String
-}
-
-// Partial object
-const partial = {
-    type: PARTIAL,
-    part: [String]
+{
+    type: PARTIAL | REFERENCE,
+    ref: [String] | String
 }
 ```
 
-missing_refs type. Member of the Descriptor type.
+### MissingRef
+
 ```javascript
-const missing_refs_obj = {
-    ref: "fafea",
-    idx: 1
+{
+    ref: String,
+    idx: Number
 }
 ```
-    
+
+### ParseError
+
+```javascript
+{
+    message: String,
+    location: {
+        start: Number,
+        end: Number
+    }
+}
+```
