@@ -1,3 +1,5 @@
+// babel-plugin-ramda patch until v1.5.0 release bug is fixed
+// https://github.com/megawac/babel-plugin-ramda/issues/38
 {
   "env": {
     "test": {
@@ -7,7 +9,7 @@
       "presets": [["env", { "modules": false }]],
       "plugins": [
         [
-          "ramda",
+          "./babel-plugin-ramda",
           {
             "useES": true
           }
