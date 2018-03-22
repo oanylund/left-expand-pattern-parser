@@ -12,65 +12,65 @@
     flatten,
     map,
     head 
-  } = utils
+  } = utils;
 }
 
 Descriptor
-  = _ parts:Part+ _ { return makeDescObj(parts) }
+  = _ parts:Part+ _ { return makeDescObj(parts); }
 
 Part
   = Partial / ExternalReferance
 
 Partial
   = partial:(Expression / Enum / ArrWrappedStaticText) { 
-      return makePartialObj(partial)
+      return makePartialObj(partial);
     }
 
 ExternalReferance "reference"
-  = "%" ref:[a-zA-Z0-9]+ "%" { return compose(makeRefObj, charArrToString)(ref) }
+  = "%" ref:[a-zA-Z0-9]+ "%" { return compose(makeRefObj, charArrToString)(ref); }
 
 Expression "expression"
-  = "(" et:ExType+ ")" { return buildList(et) }
+  = "(" et:ExType+ ")" { return buildList(et); }
 
 ExType
   = Range / Enum / FreeText
 
 Enum "enum"
   = "{" e:(EnumType ","?)+ "}" { 
-    return compose(flatten, map(head))(e)
+    return compose(flatten, map(head))(e);
   }
   
 EnumType
   = StaticText / Expression
 
 Range "range"
-  = r:(LetterRange / IntegerRange / ZeroPaddedIntegerRange) { return r }
+  = r:(LetterRange / IntegerRange / ZeroPaddedIntegerRange) { return r; }
 
 LetterRange "letter range"
-  = head:Letter "-" tail:Letter { return letterRange(head, tail) }
+  = head:Letter "-" tail:Letter { return letterRange(head, tail); }
 
 ZeroPaddedIntegerRange "zero padding"
   = "^" zeroes:Integer "^" range:IntegerRange {
-    return range.map(intStr => intStr.padStart(zeroes, "0") )
+    return range.map(intStr => intStr.padStart(zeroes, "0") );
   }
 
 IntegerRange "integer range"
-  = head:Integer "-" tail:Integer { return integerRange(head, tail) }
+  = head:Integer "-" tail:Integer { return integerRange(head, tail); }
   
 FreeText "free text"
-  = "\"" ft:[a-zA-Z0-9-\/]+ "\"" { return [charArrToString(ft)] }
+  = "\"" ft:[a-zA-Z0-9-\/]+ "\"" { return [charArrToString(ft)]; }
 
 ArrWrappedStaticText
-  = st:StaticText { return [st] }
+  = st:StaticText { return [st]; }
 
 StaticText "static text"
-  = st:[a-zA-Z0-9-_]+ { return charArrToString(st) }
+  = st:[a-zA-Z0-9-_]+ { return charArrToString(st); }
 
 Letter "letter"
-  = l:[a-zA-Z] { return l.toUpperCase() }
+  = l:[a-zA-Z] { return l.toUpperCase(); }
 
 Integer "integer"
-  = i:[0-9]+ { return +charArrToString(i) }
+  = i:[0-9]+ { return +charArrToString(i); }
 
 _ "whitespace"
   = [ \t\n\r]*
