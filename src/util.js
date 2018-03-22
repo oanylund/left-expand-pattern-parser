@@ -1,17 +1,12 @@
-const {
-  REFERENCE,
-  PARTIAL,
-  COMPLETE,
-  MISSING_REFERENCES
-} = require("./constants");
+import { REFERENCE, PARTIAL, COMPLETE, MISSING_REFERENCES } from "./constants";
 
-const R = require("ramda");
+import * as R from "ramda";
 
 // Temporary before going es6
-exports.compose = R.compose;
-exports.flatten = R.flatten;
-exports.map = R.map;
-exports.head = R.head;
+export const compose = R.compose;
+export const flatten = R.flatten;
+export const map = R.map;
+export const head = R.head;
 
 const charToCharCode = R.invoker(1, "charCodeAt")(0);
 const findMinMax = R.apply(R.juxt([Math.min, Math.max]));
@@ -24,18 +19,14 @@ const partLens = R.lensProp("part");
 const getPart = R.view(partLens);
 const zipWithIndex = R.addIndex(R.map)(R.pair);
 
-const charArrToString = R.join("");
-
-exports.charArrToString = charArrToString;
+export const charArrToString = R.join("");
 
 const appender = (acc, val) =>
   R.compose(R.flatten, R.map(av => val.map(vv => av + vv)))(acc);
 
-const buildList = tree => tree.reduce(appender);
+export const buildList = tree => tree.reduce(appender);
 
-exports.buildList = buildList;
-
-const letterRange = (a, b) =>
+export const letterRange = (a, b) =>
   R.compose(
     R.map(charCode => String.fromCharCode(charCode)),
     R.apply(R.range),
@@ -44,9 +35,7 @@ const letterRange = (a, b) =>
     R.map(charToCharCode)
   )([a, b]);
 
-exports.letterRange = letterRange;
-
-const integerRange = (a, b) =>
+export const integerRange = (a, b) =>
   R.compose(
     R.map(R.toString),
     R.apply(R.range),
@@ -54,25 +43,17 @@ const integerRange = (a, b) =>
     findMinMax
   )([a, b]);
 
-exports.integerRange = integerRange;
+export const takePos = R.curry((pos, arr) => arr.map(v => v[pos]));
 
-const takePos = R.curry((pos, arr) => arr.map(v => v[pos]));
-
-exports.takePos = takePos;
-
-const makeRefObj = ref => ({
+export const makeRefObj = ref => ({
   type: REFERENCE,
   ref
 });
 
-exports.makeRefObj = makeRefObj;
-
-const makePartialObj = part => ({
+export const makePartialObj = part => ({
   type: PARTIAL,
   part
 });
-
-exports.makePartialObj = makePartialObj;
 
 const makeCompleteList = R.compose(buildList, R.map(getPart));
 
@@ -81,7 +62,7 @@ const makeMissingRefObj = R.applySpec({
   idx: R.last
 });
 
-const findMissingRefs = R.into(
+export const findMissingRefs = R.into(
   [],
   R.compose(
     zipWithIndex,
@@ -90,18 +71,14 @@ const findMissingRefs = R.into(
   )
 );
 
-exports.findMissingRefs = findMissingRefs;
-
 const completeOrReference = R.ifElse(
   R.__,
   R.always(MISSING_REFERENCES),
   R.always(COMPLETE)
 );
 
-const makeDescObj = R.applySpec({
+export const makeDescObj = R.applySpec({
   progress: completeOrReference(hasReference),
   missing_refs: findMissingRefs,
   list: R.unless(hasReference, makeCompleteList)
 });
-
-exports.makeDescObj = makeDescObj;

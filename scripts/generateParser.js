@@ -9,7 +9,7 @@ const grammar = readFileSync(grammarPath, { encoding: "utf8" });
 
 const parserSource = peg.generate(grammar, {
   output: "source",
-  format: "commonjs",
+  format: "es",
   dependencies: {
     utils: "./util"
   }

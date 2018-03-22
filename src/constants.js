@@ -1,6 +1,6 @@
 // Constants
-exports.REFERENCE = "REFERENCE";
-exports.PARTIAL = "PARTIAL";
+export const REFERENCE = "REFERENCE";
+export const PARTIAL = "PARTIAL";
 
-exports.COMPLETE = "COMPLETE";
-exports.MISSING_REFERENCES = "MISSING_REFERENCES";
+export const COMPLETE = "COMPLETE";
+export const MISSING_REFERENCES = "MISSING_REFERENCES";
