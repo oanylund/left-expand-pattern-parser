@@ -7,12 +7,12 @@ const parserPath = join(__dirname, "../src/generatedParser.js");
 
 const grammar = readFileSync(grammarPath, { encoding: "utf8" });
 
+const header = `import * as utils from "./util";`;
+
 const parserSource = peg.generate(grammar, {
   output: "source",
   format: "es",
-  dependencies: {
-    utils: "./util"
-  }
+  header
 });
 
 writeFileSync(parserPath, parserSource);
