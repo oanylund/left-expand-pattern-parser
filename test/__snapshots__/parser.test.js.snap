@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parser should branch correctly 1`] = `
+Object {
+  "list": Array [
+    "1a",
+    "2a",
+    "3a",
+  ],
+  "missing_refs": Array [],
+  "progress": "COMPLETE",
+}
+`;
+
+exports[`parser should return error message when illegal characters 1`] = `
+Object {
+  "parse_error": Object {
+    "location": Object {
+      "end": 1,
+      "start": 0,
+    },
+    "message": "Expected enum, expression, reference, static text, or whitespace but \\"#\\" found.",
+  },
+  "progress": "ERROR",
+}
+`;
+
+exports[`parser should return expected ranges 1`] = `
+Object {
+  "list": Array [
+    "1",
+    "2",
+    "3",
+  ],
+  "missing_refs": Array [],
+  "progress": "COMPLETE",
+}
+`;
+
+exports[`parser should return expected ranges 2`] = `
+Object {
+  "list": Array [
+    "001",
+    "002",
+    "003",
+  ],
+  "missing_refs": Array [],
+  "progress": "COMPLETE",
+}
+`;
+
+exports[`parser should return expected ranges 3`] = `
+Object {
+  "list": Array [
+    "A",
+    "B",
+    "C",
+  ],
+  "missing_refs": Array [],
+  "progress": "COMPLETE",
+}
+`;
+
+exports[`parser should return partial array when refs are used 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "part": Array [
+        "1",
+        "2",
+      ],
+      "type": "PARTIAL",
+    },
+    Object {
+      "ref": "ref",
+      "type": "REFERENCE",
+    },
+    Object {
+      "part": Array [
+        "b",
+      ],
+      "type": "PARTIAL",
+    },
+  ],
+  "missing_refs": Array [
+    Object {
+      "idx": 1,
+      "ref": "ref",
+    },
+  ],
+  "progress": "MISSING_REFERENCES",
+}
+`;
+
+exports[`parser should return partial array, and be like expected on fill in 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "part": Array [
+        "1",
+      ],
+      "type": "PARTIAL",
+    },
+    Object {
+      "ref": "aRef",
+      "type": "REFERENCE",
+    },
+  ],
+  "missing_refs": Array [
+    Object {
+      "idx": 1,
+      "ref": "aRef",
+    },
+  ],
+  "progress": "MISSING_REFERENCES",
+}
+`;
+
+exports[`parser should return partial array, and be like expected on fill in 2`] = `
+Object {
+  "list": Array [
+    "1a",
+  ],
+  "missing_refs": Array [],
+  "progress": "COMPLETE",
+}
+`;
