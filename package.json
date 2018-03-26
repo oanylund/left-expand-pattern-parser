@@ -12,7 +12,8 @@
     "test": "jest"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "devDependencies": {
     "babel-core": "6.26.0",
