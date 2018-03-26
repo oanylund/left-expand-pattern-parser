@@ -2,6 +2,8 @@ import { lensProp, map, compose, over, prop, pickAll } from "ramda";
 import { parse } from "./generatedParser";
 import { ERROR } from "./constants";
 
+export { fillInReferences } from "./util";
+
 const locationLens = lensProp("location");
 
 const transformParsingError = compose(
@@ -9,7 +11,7 @@ const transformParsingError = compose(
   pickAll(["message", "location"])
 );
 
-const safeParse = str => {
+export const parser = str => {
   try {
     return parse(str);
   } catch (error) {
@@ -19,5 +21,3 @@ const safeParse = str => {
     };
   }
 };
-
-export default safeParse;
