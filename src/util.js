@@ -82,3 +82,51 @@ export const makeDescObj = R.applySpec({
   missing_refs: findMissingRefs,
   list: R.unless(hasReference, makeCompleteList)
 });
+
+export const remakeDescObj = R.compose(makeDescObj, getList);
+
+export const swapRefWithPart = (refPart, idx) =>
+  R.update(idx, makePartialObj(refPart));
+
+export const getDescObjRefNames = R.compose(
+  R.map(R.prop("ref")),
+  R.prop("missing_refs")
+);
+
+export const getDescObjIndexesForRef = descObj => ref =>
+  R.compose(
+    R.map(({ idx }) => idx),
+    R.filter(({ ref: mref }) => mref === ref),
+    R.prop("missing_refs")
+  )(descObj);
+
+export const fillInReferences = (refMap, descObj) => {
+  // refMap
+  // {
+  //   "imRefA": [part]
+  //   "imRefB": [part]
+  // }
+
+  const missing_refs = getDescObjRefNames(descObj);
+  const filteredRefMapNames = Object.keys(refMap).filter(ref =>
+    missing_refs.includes(ref)
+  );
+
+  if (filteredRefMapNames.length === 0) return descObj;
+
+  let newDescObj;
+  const getIndexesForRef = getDescObjIndexesForRef(descObj);
+
+  filteredRefMapNames.forEach(ref => {
+    const refIndexes = getIndexesForRef(ref);
+
+    newDescObj = R.reduce(
+      (descObj, idx) =>
+        R.over(listLens, swapRefWithPart(refMap[ref], idx), descObj),
+      descObj,
+      refIndexes
+    );
+  });
+
+  return remakeDescObj(newDescObj);
+};
