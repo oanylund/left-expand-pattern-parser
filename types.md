@@ -28,7 +28,7 @@ const ERROR = "ERROR";
     progress: COMPLETE | MISSING_REFERENCES | ERROR,
     parse_error?: ParseError,
     missing_refs?: [MissingRef],
-    list?: []
+    list?: [String | ListItem]
 }
 ```
 
@@ -57,9 +57,24 @@ const ERROR = "ERROR";
 ### ListItem
 
 ```javascript
+ListItem = Partial | Reference
+```
+
+### Partial
+
+```javascript
 {
-    type: PARTIAL | REFERENCE,
-    ref: [String] | String
+    type: PARTIAL,
+    part: [String]
+}
+```
+
+### Reference
+
+```javascript
+{
+    type: REFERENCE,
+    ref: String
 }
 ```
 
