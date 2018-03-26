@@ -2,6 +2,7 @@ import { lensProp, map, compose, over, prop, pickAll } from "ramda";
 import { parse } from "./generatedParser";
 import { ERROR } from "./constants";
 
+export { COMPLETE, ERROR, MISSING_REFERENCES } from "./constants";
 export { fillInReferences } from "./util";
 
 const locationLens = lensProp("location");
