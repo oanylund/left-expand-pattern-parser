@@ -1,13 +1,48 @@
 # left-expand-pattern-parser
 
+Parses a string of patterns and returns an array of strings
+
 ## Usage
 
 ```javascript
-import parser from "left-expand-pattern-parser";
+import { parser, fillInReference } from "left-expand-pattern-parser";
 
 parser("{a,b}(1-3)");
-// { progress: "COMPLETE", missing_refs: [], list: [a1, a2, a3, b1, b2, b3] }
+// { progress: "COMPLETE", missing_refs: [], list: ["a1", "a2", "a3", "b1", "b2", "b3"] }
+
+const partialResultWithRef = parse("1%aRef%");
+// {
+//     progress: "MISSING_REFERENCES",
+//     missing_refs: [{ ref: "aRef", idx: 1}],
+//     list: [
+//         { type: "PARTIAL", part: ["1"] },
+//         { type: "REFERENCE", ref: "aRef" },
+//     ]
+// }
+
+const refMap = {
+    aRef: ["a"]
+}
+
+const filledWithRefs = fillInReferences(refMap, partialResultWithRef)
+// {
+//     progress: "COMPLETE",
+//     missing_refs: [],
+//     list: ["1a"]
+// }
 ```
+
+## Exported API
+
+`parser(str: string) => Descriptor`
+
+`fillInReferences(refMap: RefMap, descObj: Descriptor) => Descriptor`
+
+`COMPLETE: string`
+
+`MISSING_REFERENCES: string`
+
+`ERROR: string`
 
 ## Constants
 
@@ -33,24 +68,33 @@ const ERROR = "ERROR";
 ```
 
 ```javascript
-// typical COMPLETE Description object
+// COMPLETE Descriptor object
 {
     progress: COMPLETE,
     missing_refs: [],
     list: [String]
 }
 
-// typical MISSING_REFERENCES Description object
+// MISSING_REFERENCES Descriptor object
 {
     progress: MISSING_REFERENCES,
     missing_refs: [MissingRef],
     list: [ListItem]
 }
 
-// typical Error Description object
+// ERROR Descriptor object
 {
     progress: ERROR,
     parse_error: ParseError
+}
+```
+
+### RefMap
+
+```javascript
+{
+    [refName: String]: [String],
+    ...
 }
 ```
 
