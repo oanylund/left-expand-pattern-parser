@@ -10,7 +10,7 @@ import { parser, fillInReference } from "left-expand-pattern-parser";
 parser("{a,b}(1-3)");
 // { progress: "COMPLETE", missing_refs: [], list: ["a1", "a2", "a3", "b1", "b2", "b3"] }
 
-const partialResultWithRef = parse("1%aRef%");
+const partialResultWithRef = parser("1%aRef%");
 // {
 //     progress: "MISSING_REFERENCES",
 //     missing_refs: [{ ref: "aRef", idx: 1}],
