@@ -2,6 +2,12 @@
 
 Parses a string of patterns and returns an array of strings
 
+## Install
+
+```javascript
+yarn add left-expand-pattern-parser
+```
+
 ## Usage
 
 ```javascript

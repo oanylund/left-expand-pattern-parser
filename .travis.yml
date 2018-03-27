@@ -13,7 +13,7 @@ node_js:
   - '8'
   - '9'
 
-before-script: yarn build-parser
+before_script: yarn build-parser
 
 script:
   - yarn test
@@ -22,7 +22,7 @@ jobs:
   include:
     - stage: release
       node_js: lts/*
-      before-script: yarn build-parser
+      before_script: yarn build-parser
       script: yarn build
       deploy:
         provider: script
